@@ -12,5 +12,5 @@ import {RouterLink} from "@angular/router";
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() heroes =[];
+  @Input() items =[];
 }

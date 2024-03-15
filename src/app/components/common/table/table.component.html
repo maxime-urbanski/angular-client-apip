@@ -10,11 +10,11 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let hero of heroes">
-    <td>{{ hero['id'] }}</td>
-    <td>{{ hero['name'] }}</td>
+  <tr *ngFor="let item of items">
+    <td>{{ item['id'] }}</td>
+    <td>{{ item['name'] }}</td>
     <td class="w-8">
-      <a [routerLink]="[hero['id']]" class="text-cyan-500">
+      <a [routerLink]="[item['id']]" class="text-cyan-500">
         Show
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
       </a>
     </td>
     <td class="w-8">
-      <a [routerLink]="['edit', hero['id']]" class="text-cyan-500">
+      <a [routerLink]="['edit', item['id']]" class="text-cyan-500">
         Edit
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -1,14 +1,35 @@
-import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, RouterLink} from "@angular/router";
+import fetchApi from "../../../../utils/api"
+import {Hero} from "../../../../interface/hero";
+import {CommonModule, NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-show',
   standalone: true,
   imports: [
-    RouterLink
+    CommonModule,
+    RouterLink,
+    NgIf
   ],
   templateUrl: './show.component.html',
 })
-export class ShowComponent {
+export class ShowComponent implements OnInit {
+  item: Hero | undefined;
 
+  constructor(
+    private router: ActivatedRoute
+  ) {
+  }
+
+  async getItem() {
+    const idRoute = this.router.snapshot.paramMap.get('id')
+    const response = await fetchApi(`/heroes/${idRoute}`)
+    this.item = await response.json()
+  }
+
+  async ngOnInit() {
+    await this.getItem()
+  }
 }

@@ -16,17 +16,15 @@ import {TableComponent} from "../../common/table/table.component";
 })
 export class ListComponent implements OnInit{
 
-  heroes= [];
+  items= [];
 
-  async getHeroes() {
+  async getItems() {
     const response = await fetchApi('/heroes');
     const data = await response.json()
-
-    this.heroes = data['hydra:member']
+    this.items = data['hydra:member']
   }
 
   async ngOnInit() {
-    await this.getHeroes()
-    console.log(this.heroes)
+    await this.getItems()
   }
 }
