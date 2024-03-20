@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink} from "@angular/router";
-import fetchApi from "../../../../utils/api"
-import {Hero} from "../../../../interface/hero";
-import {CommonModule, NgIf} from "@angular/common";
-
+import {Component} from '@angular/core';
+import { RouterLink} from "@angular/router";
+import {CommonModule,  NgIf} from "@angular/common";
+import {Store} from "@ngrx/store";
+import {HeroService} from "../../../service/hero.service";
 
 @Component({
   selector: 'app-show',
@@ -15,21 +14,28 @@ import {CommonModule, NgIf} from "@angular/common";
   ],
   templateUrl: './show.component.html',
 })
-export class ShowComponent implements OnInit {
-  item: Hero | undefined;
+export class ShowComponent {
 
-  constructor(
-    private router: ActivatedRoute
-  ) {
+  constructor( private store: Store, private heroService: HeroService) {}
+  ngOnInit() {
+   /* this.heroService
+      .getHeroes()
+      .subscribe(
+        (heroes) => this.store.dispatch(HeroesActions.getHeroes({ heroes }))
+      )*/
   }
 
-  async getItem() {
+  /*delete() {
+    if (window.confirm(`Are you sure you want to delete this ${this.item?.["@id"]}`)) {
+      this.deleteItemApi()
+        .then(() => this.location.back())
+    }
+  }
+
+  async deleteItemApi() {
     const idRoute = this.router.snapshot.paramMap.get('id')
-    const response = await fetchApi(`/heroes/${idRoute}`)
-    this.item = await response.json()
-  }
-
-  async ngOnInit() {
-    await this.getItem()
-  }
+    await fetchApi(`/heroes/${idRoute}`, {
+      method: 'DELETE'
+    })
+  }*/
 }

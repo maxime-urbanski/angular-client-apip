@@ -7,5 +7,8 @@
       Create
     </a>
   </div>
-  <app-table [items]="items"></app-table>
+  <p *ngIf="(isLoading | async) else tableHeroes">Loading ... </p>
+  <ng-template #tableHeroes>
+    <app-table [items]="(heroes$ | async)!"></app-table>
+  </ng-template>
 </div>

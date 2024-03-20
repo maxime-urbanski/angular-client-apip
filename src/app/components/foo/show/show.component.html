@@ -1,16 +1,19 @@
 <div class="container mx-auto px-4 max-w-2xl mt-4">
-  <div class="flex items-center justify-between">
+  <!--<div class="flex items-center justify-between">
     <a [routerLink]="['/heroes']"
        class="text-blue-600 hover:text-blue-800">
       Back to list
     </a>
     <div>
-      <a href="" class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
+      <a [routerLink]="['/heroes/edit', item?.id]"
+         class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
         Edit
       </a>
-      <a href="" class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700">
+      <button
+        (click)="delete()"
+        class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700">
         Delete
-      </a>
+      </button>
     </div>
   </div>
 
@@ -41,5 +44,6 @@
         </td>
       </tbody>
     </table>
-  </div>
+  </div>-->
+  coucou
 </div>

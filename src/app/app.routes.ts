@@ -12,7 +12,6 @@ export const routes: Routes = [
   {
     path:'heroes/:id',
     component: ShowComponent,
-
   },
   {
     path: 'heroes/edit/:id',
