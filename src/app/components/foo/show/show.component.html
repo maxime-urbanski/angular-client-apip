@@ -1,49 +1,51 @@
 <div class="container mx-auto px-4 max-w-2xl mt-4">
-  <!--<div class="flex items-center justify-between">
-    <a [routerLink]="['/heroes']"
-       class="text-blue-600 hover:text-blue-800">
-      Back to list
-    </a>
-    <div>
-      <a [routerLink]="['/heroes/edit', item?.id]"
-         class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
-        Edit
+  <p *ngIf="(isLoading | async) else elseData">Loading ... </p>
+  <ng-template #elseData>
+    <div class="flex items-center justify-between">
+      <a [routerLink]="['/heroes']"
+         class="text-blue-600 hover:text-blue-800">
+        Back to list
       </a>
-      <button
-        (click)="delete()"
-        class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700">
-        Delete
-      </button>
+      <div>
+        <a [routerLink]="['/heroes/edit', (item|async)?.id]"
+          class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
+          Edit
+        </a>
+        <button
+          class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700">
+          Delete
+        </button>
+      </div>
     </div>
-  </div>
 
-  <h1 class="text-3xl my-4">Show  {{ item?.["@id"] }}</h1>
+    <h1 class="text-3xl my-4">Show {{ (item|async)?.["@id"] }}</h1>
 
-  <div *ngIf="item" class="overflow-x-auto">
-    <table class="min-w-full">
-      <thead class="border-b">
-      <tr>
-        <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
-          Field
-        </th>
-        <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
-          Value
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr class="border-b">
-        <th
-          class="text-sm font-medium px-6 py-4 text-left capitalize"
-          scope="row"
-        >
-          name
-        </th>
-        <td class="px-6 py-4 whitespace-nowrap text-sm">
-          {{item.name}}
-        </td>
-      </tbody>
-    </table>
-  </div>-->
-  coucou
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="border-b">
+        <tr>
+          <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+            Field
+          </th>
+          <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+            Value
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="(item | async)"class="border-b">
+          <th
+            class="text-sm font-medium px-6 py-4 text-left capitalize"
+            scope="row"
+          >
+            name
+          </th>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            {{ (item|async)?.name }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
 </div>

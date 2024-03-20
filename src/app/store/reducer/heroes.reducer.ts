@@ -1,19 +1,21 @@
 import {createReducer, on} from '@ngrx/store'
 import {HeroesActions} from "../action/heroes.actions";
-import fetchApi from '../../../utils/api'
-import {List} from "../../interface/list";
+import {List} from "../../interface/list.model";
+import {Show} from "../../interface/show.model";
 
-export const initialState: List = {
+export const initialStateList: List = {
   isLoading: false,
   items: [],
   error: '',
 }
+
 export const heroesReducer = createReducer(
-  initialState,
+  initialStateList,
   on(HeroesActions.getHeroes,
-    (_state, {items, isLoading}) => ({
+    (_state, {items, isLoading, error}) => ({
       ..._state,
       items,
-      isLoading
+      isLoading,
+      error
     }))
 )

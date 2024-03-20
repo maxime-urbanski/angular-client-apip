@@ -1,7 +1,6 @@
-export interface Hero {
-  "@context": String,
-  "@id": String,
-  "@type": String,
+import {Api} from "./api";
+
+export interface Hero extends Api {
   id: Number,
   name: String
 }

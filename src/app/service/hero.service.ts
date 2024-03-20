@@ -1,28 +1,34 @@
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {Hero} from "../interface/hero.model";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {List} from "../interface/list";
-import {Api} from "../interface/api";
+import {List} from "../interface/list.model";
+import {ApiList, ApiShow} from "../interface/api";
 import {Store} from "@ngrx/store";
 import {HeroesActions} from "../store/action/heroes.actions";
+import {Show} from "../interface/show.model";
 
 @Injectable({providedIn: 'root'})
 export class HeroService {
-  heroes$ = this.store.select('heroes')
+  baseUrl: string = 'https://localhost'
 
   constructor(
     private http: HttpClient,
-    private store: Store<{ heroes: List }>
+    private store: Store<{
+      heroes: List,
+      show: Show
+    }>
   ) {
-    this.heroes$ = store.select('heroes')
   }
 
-  getHeroes(): Observable<Hero[]> {
+  getHeroes(): Observable<ApiList> {
     this.store.dispatch(HeroesActions.getHeroes({isLoading: true}))
     return this.http
-      .get<Api>('https://localhost/heroes')
-      .pipe(map(result => result['hydra:member']))
+      .get<ApiList>(this.baseUrl + '/heroes')
+  }
+
+  getHero(id: string | null) {
+    this.store.dispatch(HeroesActions.getHero({isLoading: true}))
+    return this.http
+      .get<ApiShow>(this.baseUrl + `/heroes/${id}`)
   }
 }
