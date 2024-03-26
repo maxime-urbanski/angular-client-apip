@@ -1,9 +1,9 @@
 import {Hero} from "./hero.model";
 
 export interface Api {
-  "@context": String,
-  "@id": String,
-  "@type": String,
+  "@context": string,
+  "@id": string,
+  "@type": string,
 }
 
 export interface ApiList extends Api {
@@ -13,5 +13,5 @@ export interface ApiList extends Api {
 
 export interface ApiShow extends Api {
   id: Number,
-  name: String
+  name: string
 }

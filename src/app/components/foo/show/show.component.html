@@ -8,13 +8,10 @@
       </a>
       <div>
         <a [routerLink]="['/heroes/edit', (item|async)?.id]"
-          class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
+           class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
           Edit
         </a>
-        <button
-          class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700">
-          Delete
-        </button>
+        <app-delete [id]="(item|async)?.['@id']!"></app-delete>
       </div>
     </div>
 
@@ -33,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngIf="(item | async)"class="border-b">
+        <tr *ngIf="(item | async)" class="border-b">
           <th
             class="text-sm font-medium px-6 py-4 text-left capitalize"
             scope="row"

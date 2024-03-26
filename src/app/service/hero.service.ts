@@ -1,5 +1,5 @@
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {catchError, Observable, throwError} from "rxjs";
 import {Injectable} from "@angular/core";
 import {List} from "../interface/list.model";
 import {ApiList, ApiShow} from "../interface/api";
@@ -20,15 +20,42 @@ export class HeroService {
   ) {
   }
 
-  getHeroes(): Observable<ApiList> {
+  getHeroes(id: string): Observable<ApiList> {
     this.store.dispatch(HeroesActions.getHeroes({isLoading: true}))
     return this.http
-      .get<ApiList>(this.baseUrl + '/heroes')
+      .get<ApiList>(this.baseUrl + id)
+      .pipe(
+        catchError(
+          this.handleError
+        )
+      )
   }
 
-  getHero(id: string | null) {
+  getHero(id: string): Observable<ApiShow> {
     this.store.dispatch(HeroesActions.getHero({isLoading: true}))
     return this.http
-      .get<ApiShow>(this.baseUrl + `/heroes/${id}`)
+      .get<ApiShow>(this.baseUrl + id)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  delete(id: string) {
+    return this.http
+      .delete(this.baseUrl + id)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, body was:`);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error(error.error));
   }
 }

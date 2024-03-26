@@ -7,7 +7,6 @@ import {List} from "../../../interface/list.model";
   selector: 'app-table',
   standalone: true,
   imports: [
-    NgForOf,
     RouterLink
   ],
   templateUrl: './table.component.html',

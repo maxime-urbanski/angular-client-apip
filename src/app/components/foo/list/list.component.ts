@@ -29,10 +29,13 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.heroService
-      .getHeroes()
+      .getHeroes('/heroes')
       .subscribe(
         (items) =>
-          this.store.dispatch(HeroesActions.getHeroes({items: items['hydra:member']}))
+          this.store.dispatch(HeroesActions.getHeroes({
+            items: items['hydra:member'],
+            isLoading: false
+          }))
       )
   }
 }
