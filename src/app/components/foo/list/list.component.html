@@ -7,8 +7,9 @@
       Create
     </a>
   </div>
-  <p *ngIf="(isLoading | async) else tableHeroes">Loading ... </p>
-  <ng-template #tableHeroes>
-    <app-table [items]="(heroes$ | async)!"></app-table>
-  </ng-template>
+  @if (isLoading()) {
+    <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ... </div>
+  } @else {
+    <app-table [items]="heroes()"></app-table>
+  }
 </div>
