@@ -9,7 +9,7 @@ import {Location} from "@angular/common";
   templateUrl: './delete.component.html',
 })
 export class DeleteComponent {
-  @Input() id: string = '';
+  @Input() id: string | undefined;
 
   constructor(
     private heroService: HeroService,
@@ -18,7 +18,7 @@ export class DeleteComponent {
   }
 
   delete() {
-    console.log('delete component id',this.id)
+    this.id &&
     this.heroService.delete(this.id).subscribe(() => this.location.back())
   }
 }

@@ -9,8 +9,8 @@
     <th [colSpan]="2"></th>
   </tr>
   </thead>
-  <tbody>
-    @for (item of items?.items; track item) {
+<tbody>
+    @for (item of items; track item) {
       <tr>
         <td>{{ item['id'] }}</td>
         <td>{{ item['name'] }}</td>
@@ -33,7 +33,7 @@
           </a>
         </td>
         <td class="w-8">
-          <a [routerLink]="['edit', item['id']]" class="text-cyan-500">
+          <a [routerLink]="[item['id'], 'edit']" class="text-cyan-500">
             Edit
             <svg
               xmlns="http://www.w3.org/2000/svg"

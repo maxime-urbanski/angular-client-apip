@@ -1,12 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {AsyncPipe, NgFor, NgIf} from "@angular/common";
 import {TableComponent} from "../../common/table/table.component";
-import {List} from "../../../interface/list.model";
-import {Store} from "@ngrx/store";
-import {HeroesActions} from "../../../store/action/heroes.actions";
 import {HeroService} from "../../../service/hero.service";
-import {selectorHeroesLoading} from "../../../store/selector/hero.selectors";
+import {Hero} from "../../../interface/hero.model";
 
 @Component({
   selector: 'app-list',
@@ -21,21 +18,23 @@ import {selectorHeroesLoading} from "../../../store/selector/hero.selectors";
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
-  heroes$ = this.store.select('heroes')
-  isLoading = this.store.select(selectorHeroesLoading)
+  heroes: WritableSignal<Hero[] | []>  = signal([])
+  isLoading = signal(false)
+  error = signal(undefined)
 
-  constructor(private store: Store<{ heroes: List }>, private heroService: HeroService) {
+  constructor(
+    private heroService: HeroService,
+  ) {
   }
 
   ngOnInit() {
+    this.isLoading.set(true)
     this.heroService
       .getHeroes('/heroes')
       .subscribe(
-        (items) =>
-          this.store.dispatch(HeroesActions.getHeroes({
-            items: items['hydra:member'],
-            isLoading: false
-          }))
-      )
+        (items) => {
+          this.heroes.set(items['hydra:member'])
+          this.isLoading.set(false)
+        })
   }
 }

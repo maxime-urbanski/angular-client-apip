@@ -3,9 +3,11 @@ import {provideRouter} from '@angular/router';
 import reducer from "./store/reducer/index";
 import {routes} from './app.routes';
 import {provideClientHydration} from '@angular/platform-browser';
-import { provideStore} from '@ngrx/store';
+import {provideState, provideStore} from '@ngrx/store';
 import {provideStoreDevtools} from '@ngrx/store-devtools';
 import {provideHttpClient, withFetch} from "@angular/common/http";
+import {updateReducer} from "./store/reducer/update.reducer";
+import {showReducer} from "./store/reducer/show.reducer";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,9 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       reducer
     ),
-    provideStoreDevtools({
-      maxAge: 25,
-      logOnly: !isDevMode()
-    })
+    provideStoreDevtools()
   ]
 };

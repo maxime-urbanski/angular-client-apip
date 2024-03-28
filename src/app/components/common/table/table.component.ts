@@ -1,7 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, WritableSignal} from '@angular/core';
 import {NgForOf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {List} from "../../../interface/list.model";
+import {Hero} from "../../../interface/hero.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-table',
@@ -12,5 +14,5 @@ import {List} from "../../../interface/list.model";
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() items: List | undefined
+  @Input() items: Hero[] = [];
 }
