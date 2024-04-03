@@ -1,10 +1,10 @@
-import {Component, computed, effect, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, computed, OnInit, signal, WritableSignal} from '@angular/core';
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {Router, RouterLink} from "@angular/router";
 import {HeroService} from "../../../service/hero.service";
 import {CommonModule, Location} from "@angular/common";
 import {ApiShow} from "../../../interface/api";
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @Component({
@@ -22,17 +22,12 @@ import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angul
 export class EditComponent implements OnInit {
   public isLoading: WritableSignal<boolean> = signal(false)
   public item: WritableSignal<ApiShow | null> = signal(null)
-  public reactiveInputName = new FormControl(this.item()?.name, {nonNullable: true})
 
   constructor(
     private router: Router,
     private heroService: HeroService,
-    private formBuilder: FormBuilder,
     private location: Location
   ) {
-    effect(() => {
-      console.log('item change ==>', this.item())
-    });
   }
 
   ngOnInit() {
@@ -67,18 +62,12 @@ export class EditComponent implements OnInit {
     })
   }
 
-  getItemComputed() {
-    return computed(() => this.item())
-  }
-
   onSubmit(event: any) {
     return this.heroService.putHero(
       this.item()?.["@id"],
       this.item()
-    ) .subscribe( () => {
+    ).subscribe(() => {
       this.location.back()
     })
   }
-
-  protected readonly name = name;
 }

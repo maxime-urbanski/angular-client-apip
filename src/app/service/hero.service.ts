@@ -2,14 +2,33 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Injectable, Signal} from "@angular/core";
 import {ApiList, ApiShow} from "../interface/api";
+import {Hero} from "../interface/hero.model";
+import {Foo} from "../interface/foo.model";
 
 @Injectable({providedIn: 'root'})
 export class HeroService {
   baseUrl: string = 'https://localhost'
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/ld+json',
+    })
+  }
 
   constructor(
     private http: HttpClient
   ) {
+  }
+
+  add(id: string, data: { name: string | null }) {
+    return this.http
+      .post<Foo>(
+        this.baseUrl + id,
+        data,
+        this.httpOptions
+      )
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
   getHeroes(id: string): Observable<ApiList> {
@@ -31,34 +50,18 @@ export class HeroService {
   }
 
   putHero(id: Signal<string | undefined> | string | undefined, data: ApiShow | null) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/ld+json',
-      })
-    }
-    return this.http.put<ApiShow>(
-      this.baseUrl + id,
-      data,
-      httpOptions
-    ).pipe(
-      catchError(this.handleError)
-    )
+
+    return this.http
+      .put<ApiShow>(
+        this.baseUrl + id,
+        data,
+        this.httpOptions
+      )
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
-  create(id: string, data: ApiShow | null) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/ld+json',
-      })
-    }
-    return this.http.post(
-      this.baseUrl + id,
-      data,
-      httpOptions
-    ).pipe(
-      catchError(this.handleError)
-    )
-  }
 
   delete(id: string) {
     return this.http
