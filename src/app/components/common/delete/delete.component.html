@@ -1,5 +1,8 @@
 <button
-  (click)="delete()"
-  class="px-6 py-2 bg-red-600 text-white text-xs rounded shadow-md hover:bg-red-700" [disabled]="!id">
+  (click)="deleteAction()"
+  [className]="!disabled ?
+  'py-2 px-4 bg-red-600 text-white text-sm rounded shadow-md hover:bg-red-700' :
+  'py-2 px-4 bg-red-600 text-white text-sm rounded shadow-md'"
+  [disabled]="disabled">
   Delete
 </button>

@@ -1,18 +1,24 @@
-import {Component, Input, WritableSignal} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {List} from "../../../interface/list.model";
 import {Hero} from "../../../interface/hero.model";
-import {Observable} from "rxjs";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-table',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    FormsModule
   ],
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() items: Hero[] = [];
+  @Input() items!: Hero[];
+  @Input() bulk!: Array<string>;
+  @Output() addToBulkList = new EventEmitter<string>()
+
+
+  addToBulk(id: string) {
+    this.addToBulkList.emit(id)
+  }
 }

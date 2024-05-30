@@ -70,4 +70,12 @@ export class EditComponent implements OnInit {
       this.location.back()
     })
   }
+
+  delete() {
+    return this.heroService.delete(
+      this.item()?.["@id"]
+    ).subscribe(
+      () => this.location.back()
+    )
+  }
 }

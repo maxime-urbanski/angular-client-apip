@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {HeroService} from "../../../service/hero.service";
 import {Location} from "@angular/common";
 
@@ -9,16 +9,15 @@ import {Location} from "@angular/common";
   templateUrl: './delete.component.html',
 })
 export class DeleteComponent {
-  @Input() id: string | undefined;
-
+  @Input() disabled!: boolean
+  @Output() delete: EventEmitter<Function> = new EventEmitter<Function>()
   constructor(
     private heroService: HeroService,
     private location: Location
   ) {
   }
 
-  delete() {
-    this.id &&
-    this.heroService.delete(this.id).subscribe(() => this.location.back())
+  deleteAction () {
+    return this.delete.emit()
   }
 }

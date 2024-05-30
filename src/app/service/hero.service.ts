@@ -63,7 +63,7 @@ export class HeroService {
   }
 
 
-  delete(id: string) {
+  delete(id: Signal<string | undefined> | string | undefined) {
     return this.http
       .delete(this.baseUrl + id)
       .pipe(
