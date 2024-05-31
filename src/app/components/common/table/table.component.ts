@@ -16,9 +16,14 @@ export class TableComponent {
   @Input() items!: Hero[];
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
+  @Output() selectedAll = new EventEmitter<Function>()
 
 
   addToBulk(id: string) {
     this.addToBulkList.emit(id)
+  }
+
+  selected() {
+    this.selectedAll.emit()
   }
 }

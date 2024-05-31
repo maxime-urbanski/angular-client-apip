@@ -19,7 +19,9 @@
   } @else {
     <app-table [items]="heroes()"
                [bulk]="bulk()"
-               (addToBulkList)="addToBulk($event)">
+               (addToBulkList)="addToBulk($event)"
+               (selectedAll)="selectedAll()"
+    >
     </app-table>
   }
 </div>

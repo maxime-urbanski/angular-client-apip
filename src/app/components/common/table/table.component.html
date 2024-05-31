@@ -4,7 +4,12 @@
 >
   <thead class="w-full text-xs uppercase font-light text-gray-700 bg-gray-200 py-2 px-4">
   <tr>
-    <th></th>
+    <th>
+      <input type="checkbox"
+             name="selectedAll"
+             (change)="selected()"
+      >
+    </th>
     <th>id</th>
     <th>name</th>
     <th [colSpan]="2"></th>
@@ -17,6 +22,7 @@
           <input type="checkbox"
                  name="test"
                  [id]="item['@id']"
+                 [checked]="bulk.includes(item['@id']!)"
                  (change)="addToBulk(item['@id']!)"
           >
         </td>

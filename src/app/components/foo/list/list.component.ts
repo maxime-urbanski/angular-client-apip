@@ -52,11 +52,16 @@ export class ListComponent implements OnInit {
     }
 
     this.bulk.update(uri => [...uri, id])
-    console.log(this.bulk())
   }
 
-  test() {
-    return [...this.bulk()]
+  selectedAll() {
+    if (!this.bulk().length) {
+      this.heroes().forEach(hero => {
+        this.bulk().push(<string>hero["@id"])
+      })
+    } else {
+      this.bulk.set([])
+    }
   }
 
   delete() {

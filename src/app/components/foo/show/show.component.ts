@@ -1,6 +1,6 @@
 import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
-import {CommonModule} from "@angular/common";
+import {CommonModule, Location} from "@angular/common";
 import {HeroService} from "../../../service/hero.service";
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {ApiShow} from "../../../interface/api";
@@ -22,7 +22,8 @@ export class ShowComponent implements OnInit {
 
   constructor(
     private heroService: HeroService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
   }
 
@@ -35,5 +36,11 @@ export class ShowComponent implements OnInit {
         this.item.set(item)
         this.isLoading.set(false)
       })
+  }
+
+  delete() {
+    return this.heroService.delete(this.item()?.['@id']).subscribe(
+      () => this.location.back()
+    )
   }
 }
