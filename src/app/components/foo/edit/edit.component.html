@@ -9,7 +9,7 @@
   @if (isLoading()) {
     <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
-    <h1 class="text-3xl my-4">Edit {{ getItemName() }} {{ item()?.["@id"] }}</h1>
+    <h1 class="text-3xl my-4">Edit {{  item()?.name }} {{ item()?.["@id"] }}</h1>
 
     <form (ngSubmit)="onSubmit($event)">
       <div class="mb-3">

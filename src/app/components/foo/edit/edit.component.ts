@@ -44,11 +44,6 @@ export class EditComponent implements OnInit {
         this.isLoading.set(false)
       })
   }
-
-  getItemName() {
-    return computed(() => this.item()?.name)
-  }
-
   getItemId(event: any) {
     this.item.update(update => {
       if (update) {
