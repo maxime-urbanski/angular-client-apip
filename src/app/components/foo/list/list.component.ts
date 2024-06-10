@@ -25,7 +25,7 @@ export class ListComponent implements OnInit {
   public heroes: WritableSignal<Hero[] | []> = signal([])
   public isLoading = signal(false)
   public error = signal(undefined)
-  @Output() bulk: WritableSignal<Array<string>> = signal([])
+  public bulk: WritableSignal<Array<string>> = signal([])
 
   constructor(
     private heroService: HeroService,

@@ -2,9 +2,9 @@ import {Component, signal, WritableSignal} from '@angular/core';
 import {DeleteComponent} from "../../common/delete/delete.component";
 import {RouterLink} from "@angular/router";
 import {HeroService} from "../../../service/hero.service";
-import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {Foo} from "../../../interface/foo.model";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Location} from "@angular/common";
+import {FormComponent} from "../../common/form/form.component";
 
 @Component({
   selector: 'app-create',
@@ -13,27 +13,27 @@ import {Location} from "@angular/common";
     DeleteComponent,
     RouterLink,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormComponent
   ],
   templateUrl: './create.component.html',
 })
 export class CreateComponent {
   public isLoading: WritableSignal<boolean> = signal(false)
-  public item: WritableSignal<Foo> = signal({})
-  public input:FormControl<string | null> = new FormControl('')
+  public formType: Array<{ name: string; type: string }> = [
+    {
+      name: 'name',
+      type: 'string',
+    }
+  ]
 
   constructor(private heroService: HeroService, private location: Location) {
   }
-
-  setItem(event: any) {
-    this.item.set(event)
-  }
-
-  onSubmit(event: any) {
+  onSubmit(data: any) {
     return this.heroService
       .add('/heroes',
         {
-          name: this.input.value
+          ...data
         }
       ).subscribe(
         (item) => {
@@ -42,5 +42,4 @@ export class CreateComponent {
         }
       )
   }
-
 }
