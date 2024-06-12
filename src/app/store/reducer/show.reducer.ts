@@ -4,7 +4,7 @@ import {HeroesActions} from "../action/heroes.actions";
 
 export const initialStateShow: Show = {
   isLoading: false,
-  item: undefined,
+  item: {},
   error: ''
 }
 

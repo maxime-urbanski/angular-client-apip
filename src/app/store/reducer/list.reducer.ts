@@ -2,7 +2,6 @@ import {createReducer, on} from "@ngrx/store";
 import * as FooAction from '../action/foo.actions'
 import {List} from "../../interface/list.model";
 
-
 export const initialStateList: List = {
   isLoading: false,
   items: [],
@@ -16,5 +15,9 @@ export const listReducer = createReducer(
     isLoading,
     items,
     error
+  })),
+  on(FooAction.isLoadingAction, (state, {isLoading}) => ({
+    ...state,
+    isLoading
   }))
 )
