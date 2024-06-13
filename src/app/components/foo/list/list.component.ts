@@ -7,7 +7,7 @@ import {DeleteComponent} from "@components/common/delete/delete.component";
 import {TableComponent} from "@components/common/table/table.component";
 import {Hero} from "@interface/hero.model";
 import {List} from "@interface/list.model";
-import {HeroService} from "@service/hero.service";
+import {ApiService} from "@service/api.service";
 import {isLoadingAction, ListActions} from "@store/action/foo.actions";
 import {selectorListError, selectorListItems, selectorListLoading} from "@store/selector/list.selectors";
 
@@ -26,26 +26,25 @@ import {selectorListError, selectorListItems, selectorListLoading} from "@store/
 })
 export class ListComponent implements OnInit {
   public isLoading$: Observable<Boolean | undefined> = this.store.select(selectorListLoading);
-  public list$: Observable<Hero[] | undefined> = this.store.select(selectorListItems);
-  public listState$ = this.store.select('list')
+  public items$: Observable<Hero[] | undefined> = this.store.select(selectorListItems);
   public error$: Observable<String | undefined> = this.store.select(selectorListError);
   public bulk: WritableSignal<Array<string>> = signal([])
 
   constructor(
     private store: Store<{ list: List }>,
-    private heroService: HeroService,
+    private apiService: ApiService,
     private location: Location
   ) {
 
   }
 
   ngOnInit() {
-    this.heroService
+    this.apiService
       .getHeroes('/heroes')
       .subscribe(
         (items) => {
-          this.store.dispatch(isLoadingAction({isLoading: true}))
           this.store.dispatch(ListActions({
+            isLoading: true,
             items: items['hydra:member']
           }))
           this.store.dispatch(isLoadingAction({isLoading: false}))
@@ -66,7 +65,7 @@ export class ListComponent implements OnInit {
 
   async selectedAll() {
     if (!this.bulk().length) {
-      await this.list$
+      await this.items$
         .forEach(item =>
           item?.forEach(i =>
             this.bulk().push(<string>i["@id"]
@@ -84,7 +83,7 @@ export class ListComponent implements OnInit {
         items =>
           items.forEach(
             uri =>
-              this.heroService.delete(uri)
+              this.apiService.delete(uri)
                 .subscribe(
                   () => {
                     window.location.reload()

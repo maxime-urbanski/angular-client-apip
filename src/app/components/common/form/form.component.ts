@@ -1,18 +1,31 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ApiUpdate} from "@interface/api";
+import {Observable} from "rxjs";
+import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './form.component.html',
 })
 export class FormComponent implements OnInit {
   @Input() fields: Array<{ name: string; type: string }> = [];
   @Output() submit = new EventEmitter
+  @Input() itemToUpdate$!: Observable<ApiUpdate | undefined>;
   public formGroup: FormGroup = new FormGroup<any>({})
+
 
   ngOnInit() {
     this.formGroup = this.createFormGroup()
@@ -20,7 +33,6 @@ export class FormComponent implements OnInit {
 
   createFormGroup() {
     const group: { [key: string]: FormControl<string | null> } = {}
-
     this.fields.forEach(field => {
       group[field.name] = new FormControl('')
     })

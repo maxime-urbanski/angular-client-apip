@@ -1,5 +1,5 @@
-import {Update} from "../../interface/update.model";
 import {createSelector} from "@ngrx/store";
+import {Update} from "@interface/update.model";
 
 export interface AppState {
   update: Update

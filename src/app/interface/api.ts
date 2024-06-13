@@ -12,6 +12,10 @@ export interface ApiList extends Api {
 }
 
 export interface ApiShow extends Api {
-  id: Number,
-  name: string
+  id: string | undefined,
+  name: String | undefined
+}
+
+export interface ApiUpdate extends ApiShow{
+  [key: string] : String | undefined
 }

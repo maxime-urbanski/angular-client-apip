@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {RouterLink} from "@angular/router";
-import {FormsModule} from "@angular/forms";
-import {ShowSvgComponent} from "../../svg/show-svg/show-svg.component";
-import {EditSvgComponent} from "../../svg/edit-svg/edit-svg.component";
-import {Observable} from "rxjs";
-import {Hero} from "../../../interface/hero.model";
 import {AsyncPipe} from "@angular/common";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
+import {Observable} from "rxjs";
+import {ShowSvgComponent} from "@components/svg/show-svg/show-svg.component";
+import {EditSvgComponent} from "@components/svg/edit-svg/edit-svg.component";
+import {Hero} from "@interface/hero.model";
 
 @Component({
   selector: 'app-table',

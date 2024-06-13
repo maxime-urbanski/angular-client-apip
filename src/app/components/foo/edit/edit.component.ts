@@ -1,11 +1,20 @@
-import {Component, computed, OnInit, signal, WritableSignal} from '@angular/core';
-import {DeleteComponent} from "../../common/delete/delete.component";
-import {Router, RouterLink} from "@angular/router";
-import {HeroService} from "../../../service/hero.service";
+import {Observable} from "rxjs";
 import {CommonModule, Location} from "@angular/common";
-import {ApiShow} from "../../../interface/api";
+import {Component, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
+import {Router, RouterLink} from "@angular/router";
+import {select, Store} from "@ngrx/store";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {FormComponent} from "@components/common/form/form.component";
+import {ApiUpdate} from "@interface/api";
+import {Update} from "@interface/update.model";
+import {ApiService} from "@service/api.service";
+import {isLoadingAction, UpdateActions} from "@store/action/foo.actions";
+import {
+  selectorUpdateError,
+  selectorUpdateItem,
+  selectorUpdateLoading
+} from "@store/selector/update.selectors";
 
 @Component({
   selector: 'app-edit',
@@ -16,35 +25,52 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
+    FormComponent,
   ],
   templateUrl: './edit.component.html',
 })
 export class EditComponent implements OnInit {
-  public isLoading: WritableSignal<boolean> = signal(false)
-  public item: WritableSignal<ApiShow | null> = signal(null)
+  public isLoading$: Observable<Boolean | undefined> = this.store.pipe(select(selectorUpdateLoading))
+  public item$ = this.store.pipe(select(selectorUpdateItem));
+  public error$: Observable<String | undefined> = this.store.pipe(select(selectorUpdateError))
+  public formType: Array<{ name: string; type: string }> = [
+    {
+      name: 'name',
+      type: 'string',
+    }
+  ]
 
   constructor(
     private router: Router,
-    private heroService: HeroService,
-    private location: Location
+    private apiService: ApiService,
+    private location: Location,
+    private store: Store<{ update: Update }>
   ) {
   }
 
   ngOnInit() {
-    this.loadData()
+    this.fetchData()
   }
 
-  loadData() {
-    this.isLoading.set(true)
+  fetchData() {
     const splitUrl = this.router.url.split('/edit')[0]
-    this.heroService
+    this.apiService
       .getHero(splitUrl)
       .subscribe(item => {
-        this.item.set(item)
-        this.isLoading.set(false)
+        this.store.dispatch(UpdateActions({
+          isLoading: true,
+          // @ts-ignore
+          item
+        }))
+        this.store.dispatch(isLoadingAction({
+          isLoading: false
+        }))
       })
+
+    console.log(this.isLoading$.pipe(val => val))
   }
-  getItemId(event: any) {
+
+  /*getItemId(event: any) {
     this.item.update(update => {
       if (update) {
         return {
@@ -55,22 +81,15 @@ export class EditComponent implements OnInit {
         return update
       }
     })
+  }*/
+
+  onSubmit(data: any) {
+    console.log('event ==>', data)
   }
 
-  onSubmit(event: any) {
-    return this.heroService.putHero(
-      this.item()?.["@id"],
-      this.item()
-    ).subscribe(() => {
-      this.location.back()
-    })
-  }
-
-  delete() {
-    return this.heroService.delete(
-      this.item()?.["@id"]
-    ).subscribe(
-      () => this.location.back()
-    )
-  }
+  /* delete() {
+     return this.apiService.delete(this.item()?.["@id"]).subscribe(
+       () => this.location.back()
+     )
+   }*/
 }

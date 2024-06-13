@@ -1,21 +1,26 @@
 import {createReducer, on} from "@ngrx/store";
-import {Update} from "../../interface/update.model";
-import {HeroesActions} from "../action/heroes.actions";
+import {Update} from "@interface/update.model";
+import * as FooActions from '@store/action/foo.actions'
+import {ApiUpdate} from "@interface/api";
 
-
-export const initialStateUpdate: Update = {
+const initialState: Update = {
   isLoading: false,
-  item: undefined,
+  item: {} as ApiUpdate,
   error: ''
 }
 
 export const updateReducer = createReducer(
-  initialStateUpdate,
-  on(HeroesActions.updateHero,
-    (_state, {item, isLoading, error}) => ({
+  initialState,
+  on(FooActions.UpdateActions,
+    (_state, {item, isLoading = false, error = ''}) => ({
       ..._state,
       item,
       isLoading,
       error
+    })),
+  on(FooActions.isLoadingAction,
+    (_state, {isLoading}) => ({
+      ..._state,
+      isLoading
     }))
 )

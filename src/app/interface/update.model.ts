@@ -1,7 +1,7 @@
-import {Hero} from "./hero.model";
+import {ApiShow, ApiUpdate} from "@interface/api";
 
 export interface Update {
   isLoading?: Boolean,
-  item?: Hero,
+  item: ApiUpdate,
   error?: string,
 }

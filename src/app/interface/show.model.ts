@@ -1,7 +1,7 @@
-import {Hero} from "./hero.model";
+import {ApiShow} from "@interface/api";
 
 export interface Show {
   isLoading?: Boolean,
-  item?: Hero,
+  item?: ApiShow | undefined,
   error?: string,
 }

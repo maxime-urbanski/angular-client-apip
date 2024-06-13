@@ -1,12 +1,11 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Injectable, Signal} from "@angular/core";
-import {ApiList, ApiShow} from "../interface/api";
-import {Hero} from "../interface/hero.model";
-import {Foo} from "../interface/foo.model";
+import {ApiList, ApiShow, ApiUpdate} from "../interface/api";
+import {Foo} from "@interface/foo.model";
 
 @Injectable({providedIn: 'root'})
-export class HeroService {
+export class ApiService {
   baseUrl: string = 'https://localhost'
   httpOptions = {
     headers: new HttpHeaders({
@@ -14,9 +13,7 @@ export class HeroService {
     })
   }
 
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor(private http: HttpClient) {
   }
 
   add(id: string, data: { name: string | null }) {
@@ -41,9 +38,9 @@ export class HeroService {
       )
   }
 
-  getHero(id: string): Observable<ApiShow> {
+  getHero(id: string | Observable<string | undefined>): Observable<ApiShow | ApiUpdate> {
     return this.http
-      .get<ApiShow>(this.baseUrl + id)
+      .get<ApiShow | ApiUpdate>(this.baseUrl + id)
       .pipe(
         catchError(this.handleError)
       )
@@ -63,7 +60,7 @@ export class HeroService {
   }
 
 
-  delete(id: Signal<string | undefined> | string | undefined) {
+  delete(id: string | undefined) {
     return this.http
       .delete(this.baseUrl + id)
       .pipe(
@@ -78,7 +75,6 @@ export class HeroService {
       console.error(
         `Backend returned code ${error.status}, body was:`);
     }
-    // Return an observable with a user-facing error message.
     return throwError(() => new Error(error.error));
   }
 }

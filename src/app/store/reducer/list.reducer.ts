@@ -1,6 +1,6 @@
 import {createReducer, on} from "@ngrx/store";
-import * as FooAction from '../action/foo.actions'
-import {List} from "../../interface/list.model";
+import {List} from "@interface/list.model";
+import * as FooAction from '@store/action/foo.actions'
 
 export const initialStateList: List = {
   isLoading: false,

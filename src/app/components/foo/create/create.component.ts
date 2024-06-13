@@ -1,10 +1,10 @@
-import {Component, signal, WritableSignal} from '@angular/core';
-import {DeleteComponent} from "../../common/delete/delete.component";
-import {RouterLink} from "@angular/router";
-import {HeroService} from "../../../service/hero.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Location} from "@angular/common";
-import {FormComponent} from "../../common/form/form.component";
+import {Component, signal, WritableSignal} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
+import {DeleteComponent} from "@components/common/delete/delete.component";
+import {FormComponent} from "@components/common/form/form.component";
+import {ApiService} from "@service/api.service";
 
 @Component({
   selector: 'app-create',
@@ -27,10 +27,11 @@ export class CreateComponent {
     }
   ]
 
-  constructor(private heroService: HeroService, private location: Location) {
+  constructor(private apiService: ApiService, private location: Location) {
   }
   onSubmit(data: any) {
-    return this.heroService
+    console.log('data ==>', data)
+    return this.apiService
       .add('/heroes',
         {
           ...data

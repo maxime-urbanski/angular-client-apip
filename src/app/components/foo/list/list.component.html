@@ -17,7 +17,7 @@
   @if (isLoading$ | async) {
     <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
-    <app-table [items]="list$"
+    <app-table [items]="items$"
                [bulk]="bulk()"
                (addToBulkList)="addToBulk($event)"
                (selectedAll)="selectedAll()"
