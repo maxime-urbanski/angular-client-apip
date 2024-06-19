@@ -22,6 +22,7 @@ export class CreateComponent {
   private apiService: ApiService = inject(ApiService)
   private location: Location = inject(Location)
   public isLoading: WritableSignal<boolean> = signal(false)
+
   public formType: Array<{ name: string; type: string }> = [
     {
       name: 'name',

@@ -1,4 +1,3 @@
-import {Hero} from "./hero.model";
 
 export interface Api {
   "@context"?: string,
@@ -6,9 +5,11 @@ export interface Api {
   "@type"?: string,
 }
 
-export interface ApiList extends Api {
+export interface ApiList {
   "hydra:totalItems": Number,
-  "hydra:member": Hero[]
+  "hydra:member": [],
+  "hydra:view": object,
+  "hydra:search": object
 }
 
 export interface ApiShow extends Api {
@@ -21,6 +22,6 @@ export interface ApiUpdate extends ApiShow {
 }
 
 
-export interface ApiCreate {
+export interface ApiItem extends Api {
   [key: string] : string | null | undefined
 }

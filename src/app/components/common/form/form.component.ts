@@ -3,10 +3,9 @@ import {
   EventEmitter,
   Input,
   Output, SimpleChange,
-  WritableSignal
 } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {ApiShow, ApiUpdate} from "@interface/api";
+import {ApiItem} from "@interface/api";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 
@@ -23,22 +22,21 @@ import {DeleteComponent} from "@components/common/delete/delete.component";
 })
 export class FormComponent {
   @Input() fields: Array<{ name: string; type: string }> = [];
-  @Input() itemToUpdate!: ApiUpdate|ApiShow|undefined;
+  @Input() itemToUpdate!: ApiItem;
   @Output() submit = new EventEmitter
   @Output() delete = new EventEmitter
   public formGroup: FormGroup = new FormGroup<any>({})
 
   ngOnChanges(changes: SimpleChange) {
     this.formGroup = this.createFormGroup()
-    console.log('ngOnChanges', this.itemToUpdate)
   }
 
   createFormGroup() {
     const group: { [key: string]: FormControl<string | null | undefined> } = {}
-    this.fields.forEach(field   => {
+    this.fields.forEach(field => {
       let value;
       if (this.itemToUpdate) {
-        value = this.itemToUpdate[field?.name as keyof ApiShow]
+        value = this.itemToUpdate[field?.name as keyof ApiItem]
       }
       group[field.name] = new FormControl(value)
     })

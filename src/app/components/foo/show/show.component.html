@@ -8,15 +8,15 @@
         Back to list
       </a>
       <div class="flex">
-        <a [routerLink]="[item()?.['@id'], 'edit']"
+        <a [routerLink]="[item()['@id'], 'edit']"
            class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
           Edit
         </a>
-        <app-delete (delete)="delete(item()?.['@id'])"></app-delete>
+        <app-delete (delete)="delete(item()['@id'])"></app-delete>
       </div>
     </div>
 
-    <h1 class="text-3xl my-4">Edit {{ item()?.['name'] }} <span class="text-xl">{{ item()?.["@id"] }} </span></h1>
+    <h1 class="text-3xl my-4">Edit {{ item()['name'] }} <span class="text-xl">{{ item()["@id"] }} </span></h1>
 
     <div class="bg-white overflow-x-auto">
       <table class="min-w-full">
@@ -40,7 +40,7 @@
               name
             </th>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-              {{ item()?.name }}
+              {{ item()['name'] }}
             </td>
           } @else {
             <td>Rien</td>

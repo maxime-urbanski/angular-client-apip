@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {ShowSvgComponent} from "@components/svg/show-svg/show-svg.component";
 import {EditSvgComponent} from "@components/svg/edit-svg/edit-svg.component";
-import {Hero} from "@interface/hero.model";
+import {Api, ApiItem} from "@interface/api";
 
 @Component({
   selector: 'app-table',
@@ -19,7 +19,7 @@ import {Hero} from "@interface/hero.model";
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() items!: WritableSignal<Hero[]| undefined>;
+  @Input() items!: WritableSignal<ApiItem[]>;
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
   @Output() selectedAll = new EventEmitter<Function>()

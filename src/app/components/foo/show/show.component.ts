@@ -3,7 +3,7 @@ import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {ApiService} from "@service/api.service";
-import {ApiShow, ApiUpdate} from "@interface/api";
+import {ApiItem} from "@interface/api";
 
 @Component({
   selector: 'app-show',
@@ -20,7 +20,7 @@ export class ShowComponent implements OnInit {
   private router: Router = inject(Router)
   private location: Location = inject(Location)
 
-  public item: WritableSignal<ApiShow| ApiUpdate | undefined> = signal({} as ApiShow )
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem)
   public isLoading: WritableSignal<boolean> = signal(false)
   public error: WritableSignal<string> = signal('')
 
@@ -28,7 +28,7 @@ export class ShowComponent implements OnInit {
     this.toggleIsLoading()
     const id = this.router.url
     this.apiService
-      .getHero(id)
+      .fetchData(id)
       .subscribe(item => this.item.set(item))
     this.toggleIsLoading()
   }

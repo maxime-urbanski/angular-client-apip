@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {DeleteComponent} from "@components/common/delete/delete.component";
 import {FormComponent} from "@components/common/form/form.component";
-import {ApiShow, ApiUpdate} from "@interface/api";
+import {ApiItem} from "@interface/api";
 import {ApiService} from "@service/api.service";
 
 
@@ -22,7 +22,7 @@ import {ApiService} from "@service/api.service";
   templateUrl: './edit.component.html',
 })
 export class EditComponent implements OnInit {
-  public item: WritableSignal<ApiShow | ApiUpdate | undefined> = signal({} as ApiShow | ApiUpdate | undefined);
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem);
   public isLoading: WritableSignal<Boolean> = signal(false)
   public error: WritableSignal<string> = signal('')
   public formType: Array<{ name: string; type: string }> = [
@@ -40,35 +40,33 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit() {
-    const splitUrl = this.router.url.split('/edit')[0]
+    const uri = this.router.url.split('/edit')[0]
     this.isLoading.set(true)
-    this.apiService.getHero(splitUrl)
+    this.apiService.fetchData(uri)
       .subscribe(value => {
         this.item.set(value)
         this.isLoading.set(false)
       })
   }
 
-  // Interception of changes
-  ngOnChanges(changes: SimpleChange) {
-  }
-
-  get itemId() {
-    return computed(() => this.item()?.["@id"])
-  }
-
   onSubmit(data: any) {
-    return this.apiService.putHero(this.itemId(), {
-      ...this.item,
-      ...data
-    }).subscribe(
-      () => this.location.back()
-    )
+    return this.apiService
+      .putHero(
+        this.item()['@id']!,
+        {
+          ...this.item,
+          ...data
+        })
+      .subscribe(
+        () => this.location.back()
+      )
   }
 
   delete() {
-    return this.apiService.delete(this.itemId()).subscribe(
-      () => this.location.back()
-    )
+    return this.apiService
+      .delete(this.item()['@id']!)
+      .subscribe(
+        () => this.location.back()
+      )
   }
 }
