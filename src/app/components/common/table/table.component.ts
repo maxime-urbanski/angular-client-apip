@@ -1,8 +1,7 @@
 import {AsyncPipe} from "@angular/common";
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, WritableSignal} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
-import {Observable} from "rxjs";
 import {ShowSvgComponent} from "@components/svg/show-svg/show-svg.component";
 import {EditSvgComponent} from "@components/svg/edit-svg/edit-svg.component";
 import {Hero} from "@interface/hero.model";
@@ -20,7 +19,7 @@ import {Hero} from "@interface/hero.model";
   templateUrl: './table.component.html',
 })
 export class TableComponent {
-  @Input() items!: Observable<Hero[]| undefined>;
+  @Input() items!: WritableSignal<Hero[]| undefined>;
   @Input() bulk!: Array<string>;
   @Output() addToBulkList = new EventEmitter<string>()
   @Output() selectedAll = new EventEmitter<Function>()

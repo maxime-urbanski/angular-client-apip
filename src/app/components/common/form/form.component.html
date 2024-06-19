@@ -18,5 +18,8 @@
     >
       Submit
     </button>
+    @if (this.delete) {
+     <app-delete (click)="handleDelete()"/>
+    }
   </div>
 </form>

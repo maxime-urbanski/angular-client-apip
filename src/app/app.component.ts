@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {AsyncPipe} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
-import {SidebarComponent} from "./components/common/sidebar/sidebar.component";
-import {HeaderComponent} from "./components/common/header/header.component";
+import {SidebarComponent} from "@components/common/sidebar/sidebar.component";
+import {HeaderComponent} from "@components/common/header/header.component";
 
 @Component({
   selector: 'app-root',

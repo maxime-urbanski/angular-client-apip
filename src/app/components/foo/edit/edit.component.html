@@ -5,13 +5,18 @@
       Back to list
     </a>
   </div>
-  @if (isLoading$) {
+  @if (isLoading()) {
     <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
+  } @else if (error()) {
+    <div class="bg-red-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
   } @else {
-    <h1 *ngIf="item$ | async as item" class="text-3xl my-4">Edit {{ item["@id"] }} {{ item['name'] }}</h1>
+
+
+    <h1 class="text-3xl my-4">Edit {{ item()?.['name'] }} <span class="text-xl">{{ item()?.["@id"] }} </span></h1>
     <app-form [fields]="formType"
-              [itemToUpdate$]="item$"
+              [itemToUpdate]="item()"
               (submit)="onSubmit($event)"
+              (delete)="delete()"
     />
   }
 </div>

@@ -1,18 +1,9 @@
-import {Observable} from "rxjs";
 import {CommonModule, Location} from "@angular/common";
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
-import {Store} from "@ngrx/store";
 import {DeleteComponent} from "@components/common/delete/delete.component";
-import {Show} from "@interface/show.model";
 import {ApiService} from "@service/api.service";
-import {
-  selectorShowError,
-  selectorShowItem,
-  selectorShowLoading
-} from "@store/selector/show.selectors";
-import {isLoadingAction, ShowActions} from "@store/action/foo.actions";
-import {ApiShow} from "@interface/api";
+import {ApiShow, ApiUpdate} from "@interface/api";
 
 @Component({
   selector: 'app-show',
@@ -25,36 +16,30 @@ import {ApiShow} from "@interface/api";
   templateUrl: './show.component.html',
 })
 export class ShowComponent implements OnInit {
-  public item$: Observable<ApiShow | undefined> = this.store.select(selectorShowItem)
-  public isLoading$: Observable<Boolean | undefined> = this.store.select(selectorShowLoading)
-  public error$: Observable<String | undefined> = this.store.select(selectorShowError)
+  private apiService: ApiService = inject(ApiService)
+  private router: Router = inject(Router)
+  private location: Location = inject(Location)
 
-  constructor(
-    private store: Store<{ show: Show }>,
-    private apiService: ApiService,
-    private router: Router,
-    private location: Location
-  ) {
-  }
+  public item: WritableSignal<ApiShow| ApiUpdate | undefined> = signal({} as ApiShow )
+  public isLoading: WritableSignal<boolean> = signal(false)
+  public error: WritableSignal<string> = signal('')
 
   ngOnInit() {
+    this.toggleIsLoading()
     const id = this.router.url
     this.apiService
       .getHero(id)
-      .subscribe(item => {
-        this.store.dispatch(ShowActions({
-          isLoading: true,
-          item
-        }))
-        this.store.dispatch(isLoadingAction({
-          isLoading: false
-        }))
-      })
+      .subscribe(item => this.item.set(item))
+    this.toggleIsLoading()
   }
 
-  delete(id: string | undefined) {
+  delete(id: string | undefined | null) {
     return this.apiService.delete(id).subscribe(
       () => this.location.back()
     )
+  }
+
+  private toggleIsLoading() {
+    return this.isLoading.update(value => !value)
   }
 }

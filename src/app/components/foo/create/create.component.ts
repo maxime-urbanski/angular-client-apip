@@ -1,5 +1,5 @@
 import {Location} from "@angular/common";
-import {Component, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {DeleteComponent} from "@components/common/delete/delete.component";
@@ -19,6 +19,8 @@ import {ApiService} from "@service/api.service";
   templateUrl: './create.component.html',
 })
 export class CreateComponent {
+  private apiService: ApiService = inject(ApiService)
+  private location: Location = inject(Location)
   public isLoading: WritableSignal<boolean> = signal(false)
   public formType: Array<{ name: string; type: string }> = [
     {
@@ -27,10 +29,7 @@ export class CreateComponent {
     }
   ]
 
-  constructor(private apiService: ApiService, private location: Location) {
-  }
   onSubmit(data: any) {
-    console.log('data ==>', data)
     return this.apiService
       .add('/heroes',
         {
