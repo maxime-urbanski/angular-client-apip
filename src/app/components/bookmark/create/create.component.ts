@@ -1,0 +1,34 @@
+import { Location } from "@angular/common";
+import { Component, inject, signal, WritableSignal } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterLink } from "@angular/router";
+import { DeleteComponent } from "@components/common/delete/delete.component";
+import { FormComponent } from "@components/bookmark/form/form.component";
+import { ApiItem } from "@interface/api";
+import { ApiService } from "@service/api.service";
+
+@Component({
+  selector: "app-create-bookmark",
+  standalone: true,
+  imports: [
+    DeleteComponent,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+    FormComponent,
+  ],
+  templateUrl: "./create.component.html",
+})
+export class CreateComponent {
+  private apiService: ApiService = inject(ApiService);
+  private location: Location = inject(Location);
+  public item: WritableSignal<ApiItem> = signal({} as ApiItem);
+  public isLoading: WritableSignal<boolean> = signal(false);
+
+  onSubmit(data: any) {
+    return this.apiService.add("/bookmark", this.item()).subscribe((item) => {
+      this.isLoading.set(true);
+      this.location.back();
+    });
+  }
+}

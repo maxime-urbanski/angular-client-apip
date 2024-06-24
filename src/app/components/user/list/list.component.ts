@@ -1,0 +1,98 @@
+import { AsyncPipe, Location, NgFor, NgIf } from "@angular/common";
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from "@angular/core";
+import { Router, RouterLink } from "@angular/router";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { DeleteComponent } from "@components/common/delete/delete.component";
+import { TableComponent } from "@components/user/table/table.component";
+import { ApiItem, Pagination } from "@interface/api";
+import { ApiService } from "@service/api.service";
+import { PaginationComponent } from "@components/common/pagination/pagination.component";
+
+@Component({
+  selector: "app-list-user",
+  standalone: true,
+  imports: [
+    RouterLink,
+    NgFor,
+    TableComponent,
+    NgIf,
+    DeleteComponent,
+    PaginationComponent,
+  ],
+  templateUrl: "./list.component.html",
+})
+export class ListComponent implements OnInit {
+  public isLoading: WritableSignal<Boolean> = signal(false);
+  public pagination: WritableSignal<Pagination> = signal({} as Pagination);
+  public items: WritableSignal<ApiItem[]> = signal([]);
+  public error: WritableSignal<String> = signal("");
+  public bulk: WritableSignal<Array<string>> = signal([]);
+  public uri: WritableSignal<string> = signal("/users");
+  private apiService: ApiService = inject(ApiService);
+  private destroy: DestroyRef = inject(DestroyRef);
+
+  ngOnInit() {
+    this.fetchData();
+  }
+
+  public fetchData() {
+    this.toggleIsLoading();
+    this.apiService
+      .fetchDataList(this.uri())
+      .pipe(takeUntilDestroyed(this.destroy))
+      .subscribe((items) => {
+        this.toggleIsLoading();
+        if (items["hydra:view"]) this.pagination.set(items["hydra:view"]);
+        this.items.set(items["hydra:member"]);
+      });
+  }
+
+  public addToBulk(id: string) {
+    if (this.isInBulkList(id)) {
+      const bulkFilter = this.bulk().filter((element) => element !== id);
+      return this.bulk.set(bulkFilter);
+    }
+
+    this.bulk.update((uri) => [...uri, id]);
+  }
+
+  public selectedAll() {
+    if (!this.bulk().length) {
+      this.items().forEach((item) => {
+        this.bulk().push(<string>item["@id"]);
+      });
+    } else {
+      this.bulk.set([]);
+    }
+  }
+
+  public delete() {
+    Promise.all(this.bulk()).then((items) =>
+      items.forEach((uri) =>
+        this.apiService.delete(uri).subscribe(() => {
+          window.location.reload();
+        })
+      )
+    );
+  }
+
+  public changePage(uri: string) {
+    this.uri.set(uri);
+    this.fetchData();
+  }
+
+  private toggleIsLoading() {
+    return this.isLoading.update((value) => !value);
+  }
+
+  private isInBulkList(id: string): boolean {
+    return this.bulk().includes(id);
+  }
+}

@@ -1,4 +1,3 @@
-
 export interface Api {
   "@context"?: string,
   "@id"?: string,
@@ -8,7 +7,7 @@ export interface Api {
 export interface ApiList {
   "hydra:totalItems": Number,
   "hydra:member": [],
-  "hydra:view": object,
+  "hydra:view": Pagination,
   "hydra:search": object
 }
 
@@ -17,11 +16,15 @@ export interface ApiShow extends Api {
   name: string | null
 }
 
-export interface ApiUpdate extends ApiShow {
+export interface ApiItem extends Api {
   [key: string] : string | null | undefined
 }
 
-
-export interface ApiItem extends Api {
-  [key: string] : string | null | undefined
+export interface Pagination {
+  "@id": string,
+  "@type": string,
+  "hydra:first":string,
+  "hydra:previous":string,
+  "hydra:last": string,
+  "hydra:next":string,
 }

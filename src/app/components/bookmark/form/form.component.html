@@ -1,0 +1,36 @@
+<form (ngSubmit)="handleSubmit()">
+  <div class="bg-white px-6 py-8">
+    <div class="mb-2">
+      <label for="book" class="text-gray-700 block text-sm font-bold capitalize">book</label>
+      <input id="book"
+             name="book"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['book']"
+              type="text"
+              required
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="bookmarkedAt" class="text-gray-700 block text-sm font-bold capitalize">bookmarkedAt</label>
+      <input id="bookmarkedAt"
+             name="bookmarkedAt"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['bookmarkedAt']"
+              type="date"
+              placeholder=""
+      />
+    </div>
+  </div>
+  <div class="bg-neutral-100 px-4 py-6 flex justify-between">
+    <button
+      type="submit"
+      class="px-6 py-2 bg-green-500 text-white font-medium rounded shadow-md hover:bg-green-600"
+    >
+      Submit
+    </button>
+    @if (this.delete) {
+    <app-delete (click)="handleDelete()"/>
+    }
+  </div>
+</form>

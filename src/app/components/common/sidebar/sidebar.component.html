@@ -1,10 +1,34 @@
 <div class="sidebar px-3 py-6">
   <ul>
     <li class="py-2 hover:bg-neutral-100">
-      <a routerLink="/heroes" [routerLinkActive]="['active']">
+      <a routerLink="/books" [routerLinkActive]="['active']">
         <div class="flex just-center items-center px-4 text-lg">
-          <app-list-svg/>
-          <span class="ml-4">Heroes</span>
+          <app-list-svg></app-list-svg>
+          <span class="ml-4">Book</span>
+        </div>
+      </a>
+    </li>
+    <li class="py-2 hover:bg-neutral-100">
+      <a routerLink="/bookmarks" [routerLinkActive]="['active']">
+        <div class="flex just-center items-center px-4 text-lg">
+          <app-list-svg></app-list-svg>
+          <span class="ml-4">Bookmark</span>
+        </div>
+      </a>
+    </li>
+    <li class="py-2 hover:bg-neutral-100">
+      <a routerLink="/reviews" [routerLinkActive]="['active']">
+        <div class="flex just-center items-center px-4 text-lg">
+          <app-list-svg></app-list-svg>
+          <span class="ml-4">Review</span>
+        </div>
+      </a>
+    </li>
+    <li class="py-2 hover:bg-neutral-100">
+      <a routerLink="/users" [routerLinkActive]="['active']">
+        <div class="flex just-center items-center px-4 text-lg">
+          <app-list-svg></app-list-svg>
+          <span class="ml-4">User</span>
         </div>
       </a>
     </li>

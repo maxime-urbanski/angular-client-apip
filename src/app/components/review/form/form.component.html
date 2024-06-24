@@ -1,0 +1,78 @@
+<form (ngSubmit)="handleSubmit()">
+  <div class="bg-white px-6 py-8">
+    <div class="mb-2">
+      <label for="book" class="text-gray-700 block text-sm font-bold capitalize">book</label>
+      <input id="book"
+             name="book"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['book']"
+              type="text"
+              required
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="body" class="text-gray-700 block text-sm font-bold capitalize">body</label>
+      <input id="body"
+             name="body"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['body']"
+              type="text"
+              required
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="rating" class="text-gray-700 block text-sm font-bold capitalize">rating</label>
+      <input id="rating"
+             name="rating"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['rating']"
+              type="number"
+              required
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="letter" class="text-gray-700 block text-sm font-bold capitalize">letter</label>
+      <input id="letter"
+             name="letter"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['letter']"
+              type="text"
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="user" class="text-gray-700 block text-sm font-bold capitalize">user</label>
+      <input id="user"
+             name="user"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['user']"
+              type="text"
+              placeholder=""
+      />
+    </div>
+    <div class="mb-2">
+      <label for="publishedAt" class="text-gray-700 block text-sm font-bold capitalize">publishedAt</label>
+      <input id="publishedAt"
+             name="publishedAt"
+             class="mt-1 w-full px-3 py-2 border rounded"
+             [(ngModel)]="item['publishedAt']"
+              type="date"
+              placeholder=""
+      />
+    </div>
+  </div>
+  <div class="bg-neutral-100 px-4 py-6 flex justify-between">
+    <button
+      type="submit"
+      class="px-6 py-2 bg-green-500 text-white font-medium rounded shadow-md hover:bg-green-600"
+    >
+      Submit
+    </button>
+    @if (this.delete) {
+    <app-delete (click)="handleDelete()"/>
+    }
+  </div>
+</form>

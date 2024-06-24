@@ -1,11 +1,11 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {inject, Injectable, Signal} from "@angular/core";
-import {ApiItem, ApiList, ApiShow, ApiUpdate} from "@interface/api";
+import {inject, Injectable} from "@angular/core";
+import {ApiItem, ApiList, ApiShow} from "@interface/api";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
-  baseUrl: string = 'https://localhost'
+  baseUrl: string = 'https://demo.api-platform.com'
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/ld+json',
@@ -43,7 +43,7 @@ export class ApiService {
       )
   }
 
-  public putHero(id: string, data: ApiItem) {
+  public put(id: string, data: ApiItem) {
     return this.http
       .put<ApiShow>(
         this.baseUrl + id,
