@@ -1,12 +1,12 @@
 <div class="w-full px-4 mt-4">
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
   <div class="flex items-center justify-between">
-    <a [routerLink]="['/user']"
-       class="text-blue-600 hover:text-blue-800">
-      Back to list
-    </a>
+    <app-back-to-list url="/users" />
     <div class="flex">
       <a [routerLink]="[item()['@id'], 'edit']"
          class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
@@ -40,7 +40,7 @@
           firstName
         </th>
         <td class="px-6 py-4 whitespace-nowrap text-sm">
-          {{ item()['name'] }}
+          {{ item()['firstName'] }}
                   </td>
       </tr>
       <tr class="border-b">
@@ -51,7 +51,7 @@
           lastName
         </th>
         <td class="px-6 py-4 whitespace-nowrap text-sm">
-          {{ item()['name'] }}
+          {{ item()['lastName'] }}
                   </td>
       </tr>
       <tr class="border-b">
@@ -71,5 +71,4 @@
       </tbody>
     </table>
   </div>
-  }
 </div>

@@ -1,24 +1,30 @@
-import { ListComponent } from "@components/review/list/list.component";
-import { ShowComponent } from "@components/review/show/show.component";
-import {CreateComponent} from "@components/review/create/create.component";
-import {EditComponent} from "@components/review/edit/edit.component";
-
 export const ReviewRoutes = [
   {
     path: "reviews",
-    component: ListComponent,
-  },
-  {
-    path: "reviews/:id",
-    component: ShowComponent,
+    loadComponent: () =>
+      import("@components/review/list/list.component").then(
+        (c) => c.ListComponent
+      ),
   },
   {
     path: "reviews/add",
-    component: CreateComponent,
+    loadComponent: () =>
+      import("@components/review/create/create.component").then(
+        (c) => c.CreateComponent
+      ),
   },
-
+  {
+    path: "reviews/:id",
+    loadComponent: () =>
+      import("@components/review/show/show.component").then(
+        (c) => c.ShowComponent
+      ),
+  },
   {
     path: "reviews/:id/edit",
-    component: EditComponent,
-  }
+    loadComponent: () =>
+      import("@components/review/edit/edit.component").then(
+        (c) => c.EditComponent
+      ),
+  },
 ];

@@ -1,24 +1,30 @@
-import { ListComponent } from "@components/book/list/list.component";
-import { ShowComponent} from "@components/book/show/show.component"
-import { EditComponent} from "@components/book/edit/edit.component"
-import { CreateComponent } from "@components/book/create/create.component"
-import {Routes} from "@angular/router";
-
-export const BookRoutes:Routes = [
+export const BookRoutes = [
   {
     path: "books",
-    component: ListComponent,
+    loadComponent: () =>
+      import("@components/book/list/list.component").then(
+        (c) => c.ListComponent
+      ),
   },
   {
     path: "books/add",
-    component: CreateComponent,
-  },
-  {
-    path: "books/:id/edit",
-    component: EditComponent,
+    loadComponent: () =>
+      import("@components/book/create/create.component").then(
+        (c) => c.CreateComponent
+      ),
   },
   {
     path: "books/:id",
-    component: ShowComponent,
+    loadComponent: () =>
+      import("@components/book/show/show.component").then(
+        (c) => c.ShowComponent
+      ),
+  },
+  {
+    path: "books/:id/edit",
+    loadComponent: () =>
+      import("@components/book/edit/edit.component").then(
+        (c) => c.EditComponent
+      ),
   },
 ];

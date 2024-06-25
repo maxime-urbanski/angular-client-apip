@@ -1,24 +1,30 @@
-import {ListComponent} from "@components/bookmark/list/list.component";
-import {ShowComponent} from "@components/bookmark/show/show.component";
-import {CreateComponent} from "@components/bookmark/create/create.component";
-import {EditComponent} from "@components/bookmark/edit/edit.component";
-
 export const BookmarkRoutes = [
   {
     path: "bookmarks",
-    component: ListComponent,
+    loadComponent: () =>
+      import("@components/bookmark/list/list.component").then(
+        (c) => c.ListComponent
+      ),
   },
   {
     path: "bookmarks/add",
-    component: CreateComponent,
-  },
-
-  {
-    path: "bookmarks/:id/edit",
-    component: EditComponent,
+    loadComponent: () =>
+      import("@components/bookmark/create/create.component").then(
+        (c) => c.CreateComponent
+      ),
   },
   {
     path: "bookmarks/:id",
-    component: ShowComponent,
-  }
+    loadComponent: () =>
+      import("@components/bookmark/show/show.component").then(
+        (c) => c.ShowComponent
+      ),
+  },
+  {
+    path: "bookmarks/:id/edit",
+    loadComponent: () =>
+      import("@components/bookmark/edit/edit.component").then(
+        (c) => c.EditComponent
+      ),
+  },
 ];

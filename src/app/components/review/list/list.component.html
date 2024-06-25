@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center">
     <h1 class="text-3xl mb-2">Review List</h1>
     <div class="flex">
-      <a routerLink="/review/add"
+      <a routerLink="/reviews/add"
          class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
       >
         Create
@@ -14,8 +14,11 @@
     </div>
   </div>
   @if (isLoading()) {
-  <div class="bg-blue-100 rounded py-4 px-4 text-blue-700 text-sm">Loading ...</div>
-  } @else {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
   <app-table-review [items]="items"
              [bulk]="bulk()"
              (addToBulkList)="addToBulk($event)"
@@ -23,9 +26,8 @@
   />
     @if (pagination()) {
       <app-pagination
-        [pagination]="pagination!"
+        [pagination]="pagination"
         (handleChangePage)="changePage($event)"
       />
     }
-  }
 </div>

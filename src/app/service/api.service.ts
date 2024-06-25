@@ -5,7 +5,7 @@ import {ApiItem, ApiList, ApiShow} from "@interface/api";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
-  baseUrl: string = 'https://demo.api-platform.com'
+  baseUrl: string = "https://demo.api-platform.com"
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/ld+json',
@@ -69,7 +69,7 @@ export class ApiService {
       console.error('An error occurred:', error.error);
     } else {
       console.error(
-        `Backend returned code ${error.status}, body was:`);
+        `Backend returned code ${error.status}, body was:`, error.message);
     }
     return throwError(() => new Error(error.error));
   }

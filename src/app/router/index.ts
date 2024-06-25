@@ -1,4 +1,4 @@
-import {BookRoutes} from "@router/book";
+  import {BookRoutes} from "@router/book";
 import {BookmarkRoutes} from "@router/bookmark";
 import {ReviewRoutes} from "@router/review";
 import {UserRoutes} from "@router/user";
