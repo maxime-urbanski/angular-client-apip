@@ -1,0 +1,107 @@
+<div class="w-full px-4 mt-4">
+  @if (isLoading()) {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+  <div class="flex items-center justify-between">
+    <app-back-to-list url="/reviews" />
+    <div class="flex">
+      <a [routerLink]="[item()['@id'], 'edit']"
+         class="px-6 py-2 mr-2 bg-green-600 text-white text-xs rounded shadow-md hover:bg-green-700">
+        Edit
+      </a>
+      <app-delete (delete)="delete(item()['@id'])"></app-delete>
+    </div>
+  </div>
+
+  <h1 class="text-3xl my-4">Edit {{ item()['name'] }} <span class="text-xl">{{ item()["@id"] }} </span></h1>
+
+  <div class="bg-white overflow-x-auto">
+    <table class="min-w-full">
+      <thead class="border-b">
+      <tr>
+        <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+          Field
+        </th>
+        <th scope="col" class="text-sm font-medium px-6 py-4 text-left">
+          Value
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      @if (item()) {
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          book
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ item()['book'] }}
+                  </td>
+      </tr>
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          body
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ item()['body'] }}
+                  </td>
+      </tr>
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          rating
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ item()['rating'] }}
+                  </td>
+      </tr>
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          letter
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ item()['letter'] }}
+                  </td>
+      </tr>
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          user
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ item()['user'] }}
+                  </td>
+      </tr>
+      <tr class="border-b">
+        <th
+          class="text-sm font-medium px-6 py-4 text-left capitalize"
+          scope="row"
+        >
+          publishedAt
+        </th>
+        <td class="px-6 py-4 whitespace-nowrap text-sm">
+          {{ formatDateTime(item()['publishedAt']) }}
+        </td>
+      </tr>
+      } @else {
+      <td>Rien</td>
+      }
+      </tbody>
+    </table>
+  </div>
+</div>

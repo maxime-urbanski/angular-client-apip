@@ -1,0 +1,34 @@
+<div class="p-8 mt-4">
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl mb-2">Book List</h1>
+    <div class="flex">
+      <a routerLink="/books/add"
+         class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 rounded mr-2"
+      >
+        Create
+      </a>
+      <app-delete
+        [disabled]="!bulk().length"
+        (delete)="delete()"
+      />
+    </div>
+  </div>
+  @if (isLoading()) {
+  <app-alert type="loading"/>
+  }
+  @if (error()) {
+  <app-alert type="error" [error]="error"/>
+  }
+
+  <app-table-book [items]="items"
+             [bulk]="bulk()"
+             (addToBulkList)="addToBulk($event)"
+             (selectedAll)="selectedAll()"
+  />
+    <app-pagination
+      [pagination]="pagination"
+      (handleChangePage)="changePage($event)"
+    />
+
+  <button (click)="navigateUrl('/bookmarks')">Test</button>
+</div>
